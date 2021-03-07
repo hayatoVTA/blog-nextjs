@@ -1,0 +1,9 @@
+node_modules
+.next
+yarn.lock
+package.json
+public
+tsconfig.json
+tsconfig.eslint.json
+.eslintrc.yml
+.prettier.yml
