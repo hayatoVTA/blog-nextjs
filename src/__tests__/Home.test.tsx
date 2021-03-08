@@ -1,6 +1,6 @@
 /// <reference types="jest" />
 
-import Home from '@/src/pages/index';
+import Home from '@/pages/index';
 
 it('Has Home component?', () => {
   expect(Home).toBeTruthy();
