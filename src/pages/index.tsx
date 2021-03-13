@@ -1,65 +1,50 @@
-import Head from 'next/head';
-import styles from '@/styles/Home.module.css';
+import React from 'react';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 
-export default function Home(): JSX.Element {
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+
+import { PostType } from '@/types/post';
+import { getSortedPostsData } from '@/lib/posts';
+import Layout from '@/components/layout/layout';
+import Post from '@/components/post';
+import Intro from '@/components/intro';
+import SectionSeparator from '@/components/separator';
+
+// getStaticProps() の返り値をもとにPostに渡される型を推測する。
+type Props = InferGetStaticPropsType<typeof getStaticProps>;
+
+export const getStaticProps: GetStaticProps = async () => {
+  const allPostsData = getSortedPostsData();
+  return {
+    props: {
+      allPostsData,
+    },
+  };
+};
+
+const Blog = ({ allPostsData }: Props): JSX.Element => {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Layout title="Blog" description="Blog with React/Next.js">
+      <Container maxWidth="lg">
+        <Intro />
+        <SectionSeparator />
+        <Grid
+          container
+          spacing={4}
+          alignContent="space-between"
+          alignItems="center"
+          justify="flex-start"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+          {allPostsData.map(({ slug, title, excerpt, date }: PostType) => (
+            <Grid item key={slug} xs={12} sm={6} md={4}>
+              <Post title={title} subtitle={excerpt} slug={slug} date={date} />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Layout>
   );
-}
+};
+
+export default Blog;
