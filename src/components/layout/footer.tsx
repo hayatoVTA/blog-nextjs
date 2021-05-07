@@ -17,12 +17,8 @@ const Footer: React.VFC = () => {
   const theme = useTheme();
 
   return (
-    <Box
-      mt={theme.spacing(1)}
-      bgcolor="primary.main"
-      color="primary.contrastText"
-    >
-      {/** コンテンツ不足でも画面下にくるように */}
+    /** コンテンツ不足でも画面下にくるように */
+    <Box mt="auto" bgcolor="primary.main" color="primary.contrastText">
       <footer>
         <Container maxWidth="lg">
           <Grid

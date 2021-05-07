@@ -33,7 +33,6 @@ const Blog = ({ allPostsData }: Props): JSX.Element => {
           style={{
             fontSize: '1.5rem',
             fontWeight: 'bold',
-            margin: '3em 0 1.5em',
             borderBottom: '2px solid rgb(208 208 208)',
           }}
         >

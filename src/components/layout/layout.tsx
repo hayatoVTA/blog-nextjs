@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Prism from 'prismjs';
 import Head from 'next/head';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 
 import Header from './header';
@@ -9,6 +9,7 @@ import ScrollTopToAnchor from './scroll-top-to-anchor';
 import NavigationBar from './navigation-bar';
 import Footer from './footer';
 import { config } from 'site.config';
+import theme from '@/styles/theme';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -28,6 +29,7 @@ type Props = {
 
 const Layout: React.VFC<Props> = ({ children, title, description, url }) => {
   const classes = useStyles();
+  const theme = useTheme();
   useEffect(() => {
     Prism.highlightAll();
   });
@@ -71,7 +73,9 @@ const Layout: React.VFC<Props> = ({ children, title, description, url }) => {
       <Box position="sticky" top="0">
         <NavigationBar />
       </Box>
-      <main>{children}</main>
+      <Box my={theme.spacing(1)}>
+        <main>{children}</main>
+      </Box>
       <Footer />
     </div>
   );
