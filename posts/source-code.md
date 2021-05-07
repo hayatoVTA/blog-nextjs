@@ -5,12 +5,15 @@ tags: []
 date: '2021-01-04T10:00:26+09:00'
 ---
 
-## C++
+# 目次
+
+# C++
 
 C++のシンタックスハイライト。
-```cpp: test.cpp
+
+```cpp:test.cpp
 class hoge {
-  hoge();
+  hogehogehogehoge();
   ~hoge();
 }
 
@@ -23,11 +26,23 @@ hoge::~hoge()
 }
 ```
 
-## TypeScript
+# TypeScript
 
 TypeScriptのシンタックスハイライト。
-```typescript:test.ts
+
+```ts:test.ts
 function myFunc(num: number) {
   return num ** 2
 }
 ```
+
+# JavaScript
+
+<details><summary>Open TypeScriptのシンタックスハイライト</summary>
+
+```js:test.js
+// the hello world program
+console.log('Hello World');
+```
+
+</details>

@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -44,24 +45,32 @@ const MorePost: React.VFC<Props> = ({
   const classes = useStyles();
   return (
     <Card className={classes.root}>
-      {coverImage ? (
-        <CardMedia className={classes.media} image={coverImage} title={title} />
-      ) : (
-        <></>
-      )}
-      <CardContent className={classes.content}>
-        <Typography gutterBottom variant="h5" component="h2">
-          <Link href="/posts/[slug]" as={`/posts/${slug}`}>
-            {title.length > 80 ? subtitle.substr(0, 80) + '...' : title}
-          </Link>
-        </Typography>
-        <Typography>
-          <DateFormatter dateString={date} />
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {subtitle.length > 150 ? subtitle.substr(0, 150) + '...' : subtitle}
-        </Typography>
-      </CardContent>
+      <Link href="/posts/[slug]" as={`/posts/${slug}`} underline="none">
+        <CardActionArea>
+          {coverImage ? (
+            <CardMedia
+              className={classes.media}
+              image={coverImage}
+              title={title}
+            />
+          ) : (
+            <></>
+          )}
+          <CardContent className={classes.content}>
+            <Typography gutterBottom variant="h5" component="h2">
+              {title.length > 80 ? subtitle.substr(0, 80) + '...' : title}
+            </Typography>
+            <Typography>
+              <DateFormatter dateString={date} />
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {subtitle.length > 150
+                ? subtitle.substr(0, 150) + '...'
+                : subtitle}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Link>
     </Card>
   );
 };

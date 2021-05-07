@@ -42,7 +42,7 @@ const Tags = ({ allTags }: Props): JSX.Element => {
           <Grid container spacing={1} className={classes.tagList}>
             {allTags.map((tag: string) => (
               <Grid item key={tag}>
-                <Link href="/tags/[tag]" as={`/tags/${tag}`}>
+                <Link href="/tags/[tag]" as={`/tags/${tag}`} underline="none">
                   <Button size="small" variant="outlined" color="secondary">
                     {tag}
                   </Button>

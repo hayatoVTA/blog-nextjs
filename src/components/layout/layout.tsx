@@ -1,10 +1,14 @@
-import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useEffect } from 'react';
+import Prism from 'prismjs';
 import Head from 'next/head';
-import Header from './header';
-import Footer from './footer';
+import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 
-import { PAGE_URL, SITE_TITLE } from '@/lib/constants';
+import Header from './header';
+import ScrollTopToAnchor from './scroll-top-to-anchor';
+import NavigationBar from './navigation-bar';
+import Footer from './footer';
+import { config } from 'site.config';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -24,6 +28,9 @@ type Props = {
 
 const Layout: React.VFC<Props> = ({ children, title, description, url }) => {
   const classes = useStyles();
+  useEffect(() => {
+    Prism.highlightAll();
+  });
   return (
     <div className={classes.root}>
       <Head>
@@ -36,13 +43,13 @@ const Layout: React.VFC<Props> = ({ children, title, description, url }) => {
         <meta
           property="og:url"
           key="og:url"
-          content={url ? url : `${PAGE_URL}`}
+          content={url ? url : `${config.baseUrl}`}
         />
         <meta
           property="og:image"
           key="og:image"
           content={`https://og-image.now.sh/${encodeURI(
-            SITE_TITLE
+            config.siteMeta.title
           )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.zeit.co%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
         />
         <meta
@@ -59,7 +66,11 @@ const Layout: React.VFC<Props> = ({ children, title, description, url }) => {
           content="minimum-scale=1, width=device-width, initial-scale=1"
         />
       </Head>
+      <ScrollTopToAnchor />
       <Header />
+      <Box position="sticky" top="0">
+        <NavigationBar />
+      </Box>
       <main>{children}</main>
       <Footer />
     </div>

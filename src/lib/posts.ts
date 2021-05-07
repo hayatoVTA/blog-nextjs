@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import remark from 'remark';
 import html from 'remark-html';
+import toc from 'remark-toc';
 
 type MatterData = {
   title: string;
@@ -65,6 +66,7 @@ export const getSortedPostsData = (): any => {
 export const getAllPostBySlug = (): any => {
   const fileNames = fs.readdirSync(postsDirectory);
   return fileNames.map((fileName) => {
+    // GetStaticPaths のオブジェクトの形式
     return {
       params: {
         slug: fileName.replace(/\.md$/, ''),
@@ -82,6 +84,7 @@ export const getPostData = async (slug: string): Promise<any> => {
 
   // Use remark to convert markdown into HTML string
   const processedContent = await remark()
+    .use(toc, { heading: '目次', maxDepth: 2 })
     .use(html)
     .process(matterResult.content);
   const contentHtml = processedContent.toString();

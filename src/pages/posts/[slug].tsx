@@ -14,11 +14,13 @@ import Layout from '@/components/layout/layout';
 import BlogBody from '@/components/blog-body';
 import BlogHeader from '@/components/blog-header';
 import MorePost from '@/components/more-posts';
+import Share from '@/components/share';
 
-// 最初に実行される。事前ビルドするパスを配列で返却する。
+// ビルド時に実行される。事前ビルドするパスを配列で返却する。
 export const getStaticPaths: GetStaticPaths = async () => {
   // 全ての投稿のslugを取得する。
   const paths = getAllPostBySlug();
+  // paths と fallback key を含むオブジェクトを返却する。
   return {
     paths,
     fallback: false, // 存在しないパスは全て404エラーで返す。
@@ -28,6 +30,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 // getStaticProps() の返り値をもとにPostに渡される型を推測する。
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
+// この関数はサーバー側でのビルド時に呼び出され、
 // ルーティングの情報が入ったparamsを受け取る
 export const getStaticProps: GetStaticProps = async (
   context: GetStaticPropsContext
@@ -39,6 +42,8 @@ export const getStaticProps: GetStaticProps = async (
     return slug !== mySlug;
   });
   allPostsDataExceptOwn.length = 3;
+
+  // ビルド時に Post コンポーネントは props を受け取る。
   return {
     props: {
       postData,
@@ -48,12 +53,13 @@ export const getStaticProps: GetStaticProps = async (
   };
 };
 
+// props はビルド時に getStaticProps() によって生成される。
 const Post: NextPage<Props> = (props) => {
   return (
     <Layout title={props.postData.title} description={props.postData.excerpt}>
       <article>
         <Container maxWidth="lg">
-          <Box mt={4} display="flex" justifyContent="center">
+          <Box mt={4} display="flex" flexWrap="wrap" justifyContent="center">
             <Box>
               <BlogHeader
                 title={props.postData.title}
@@ -77,6 +83,21 @@ const Post: NextPage<Props> = (props) => {
                 </ul>
               </Box>
             </Box>
+          </Box>
+          <Box mb={4}>
+            <Typography
+              align="center"
+              gutterBottom
+              style={{
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                margin: '3em 0 1.5em',
+                borderBottom: '2px solid rgb(208 208 208)',
+              }}
+            >
+              - Share -
+            </Typography>
+            <Share slug={props.postData.slug} title={props.postData.title} />
           </Box>
           <Box mb={4}>
             <Typography

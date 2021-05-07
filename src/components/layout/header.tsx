@@ -1,163 +1,54 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import NextLink from 'next/link';
-import {
-  AppBar,
-  Fab,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  SwipeableDrawer,
-  Tab,
-  Tabs,
-  Toolbar,
-  Typography,
-  Zoom,
-  useScrollTrigger,
-  useMediaQuery,
-} from '@material-ui/core';
-import {
-  makeStyles,
-  Theme,
-  createStyles,
-  useTheme,
-} from '@material-ui/core/styles';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import useTheme from '@material-ui/core/styles/useTheme';
+
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Box from '@material-ui/core/Box';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Typography from '@material-ui/core/Typography';
+
 import MenuIcon from '@material-ui/icons/Menu';
 
 import Link from '@/components/link';
-import { SITE_TITLE } from '@/lib/constants';
+import { config } from 'site.config';
 
-type Props = {
-  children: React.ReactElement;
-};
-
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
-    scrollTopIcon: {
-      position: 'fixed',
-      bottom: theme.spacing(2),
-      right: theme.spacing(2),
-    },
-    titleIcon: {
-      height: '27px',
-      width: '27px',
-      position: 'relative',
-      marginTop: '1px', //アイコンとタイトルの微調整（なんかいいやり方ないか）
-      zIndex: 100,
-    },
-    title: {
-      color: theme.palette.primary.contrastText,
-      position: 'relative',
-      zIndex: 100,
-    },
-    tabIconContainer: {
-      marginLeft: 'auto',
-    },
-    tabIcon: {
-      color: theme.palette.primary.contrastText,
-      '&:hover': {
-        backgroundColor: 'transparent',
-      },
-    },
+    headerImg: { objectFit: 'cover' },
+    headerTxt: { transform: 'translateY(-50%)' },
     drawer: {
       padding: '0 5em',
-    },
-    drawerIconContainer: {
-      marginLeft: 'auto',
-      padding: 0,
-      '&:hover': {
-        backgroundColor: 'transparent',
-      },
-    },
-    drawerIcon: {
-      color: theme.palette.primary.contrastText,
-    },
-    toolBar: {
-      maxWidth: '1280px',
-      margin: '0 auto',
-      width: '100%',
     },
   })
 );
 
-import { routes } from '@/data/routes'; //イイ感じにroutesから取得できないか
-import PhoneIcon from '@material-ui/icons/Phone';
-import PersonIcon from '@material-ui/icons/Person';
-export const TabRoutes = [
+const TabRoutes = [
   {
     name: 'Home',
     link: '/',
     tabName: 'HOME',
-    tabIcon: <PhoneIcon />,
   },
   {
     name: 'About',
     link: '/about',
     tabName: 'ABOUT',
-    tabIcon: <PersonIcon />,
   },
 ];
-
-const ScrollTop: React.VFC<Props> = ({ children }) => {
-  const classes = useStyles();
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 100,
-  });
-
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    const anchor = (
-      (event.target as HTMLDivElement).ownerDocument || document
-    ).querySelector('#back-to-top-anchor');
-
-    if (anchor) {
-      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  };
-
-  return (
-    <Zoom in={trigger}>
-      <div
-        onClick={handleClick}
-        role="presentation"
-        className={classes.scrollTopIcon}
-      >
-        {children}
-      </div>
-    </Zoom>
-  );
-};
 
 const Header: React.VFC = () => {
   const classes = useStyles();
   const router = useRouter();
   const theme = useTheme();
 
-  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'));
   const path = TabRoutes;
-  const value = path.findIndex((route) => route.link === router.pathname);
-  const tabs = (
-    <>
-      <Tabs
-        value={value < 0 ? false : value}
-        className={classes.tabIconContainer}
-        indicatorColor="secondary"
-        textColor="secondary"
-      >
-        {path.map(({ link, tabName, tabIcon }) => (
-          <NextLink key={link} href={link}>
-            <div className={classes.tabIcon}>
-              <Tab label={tabName} icon={tabIcon} />
-            </div>
-          </NextLink>
-        ))}
-      </Tabs>
-    </>
-  );
-
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const [openDrawer, setOpenDrawer] = useState(false);
   const drawer = (
@@ -169,7 +60,7 @@ const Header: React.VFC = () => {
         onClose={() => setOpenDrawer(false)}
         onOpen={() => setOpenDrawer(true)}
         classes={{ paper: classes.drawer }}
-        anchor="right"
+        anchor="left"
       >
         <List disablePadding>
           {path.map(({ tabName, link }) => (
@@ -200,46 +91,61 @@ const Header: React.VFC = () => {
           ))}
         </List>
       </SwipeableDrawer>
-      <IconButton
-        onClick={() => setOpenDrawer(!openDrawer)}
-        disableRipple
-        className={classes.drawerIconContainer}
-      >
-        <MenuIcon className={classes.drawerIcon} />
-      </IconButton>
+      <Box>
+        <IconButton
+          onClick={() => setOpenDrawer(!openDrawer)}
+          disableRipple
+          color="secondary"
+        >
+          <MenuIcon fontSize="large" />
+        </IconButton>
+      </Box>
     </>
   );
 
+  const baseUrl: string = config.baseUrl!;
+
   return (
-    <>
-      <AppBar>
-        <Toolbar className={classes.toolBar}>
-          <Link href="/">
-            <Grid container wrap="nowrap">
-              <Grid item>
-                <img
-                  src="/favicon.ico"
-                  alt="logo"
-                  className={classes.titleIcon}
-                />
-              </Grid>
-              <Grid item>
-                <Typography className={classes.title} variant="h5">
-                  {SITE_TITLE}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Link>
-          {matches ? drawer : tabs}
-        </Toolbar>
-      </AppBar>
-      <Toolbar id="back-to-top-anchor" />
-      <ScrollTop>
-        <Fab color="secondary">
-          <KeyboardArrowUpIcon />
-        </Fab>
-      </ScrollTop>
-    </>
+    <header>
+      <Box position="relative" m={0} p={0} height="512px">
+        {mobile ? (
+          <Box
+            position="absolute"
+            width="100%"
+            top="0"
+            left="0"
+            textAlign="right"
+          >
+            {drawer}
+          </Box>
+        ) : (
+          <></>
+        )}
+        <img
+          src="/images/nextjs-logotype-dark.png"
+          alt="Picture of the author"
+          width="100%"
+          height="100%" /** ここは画像サイズから自動取得したい */
+          className={classes.headerImg}
+        />
+        <Box
+          component="p"
+          position="absolute"
+          width="100%"
+          top="50%"
+          left="0"
+          textAlign="center"
+          className={classes.headerTxt}
+        >
+          <Typography variant="h1" component="span">
+            {config.siteMeta.title}
+          </Typography>
+          <Typography variant="h5" component="p">
+            {config.siteMeta.description}
+          </Typography>
+        </Box>
+      </Box>
+    </header>
   );
 };
 

@@ -1,6 +1,6 @@
 # BLOG with Next.js
 
-完全な趣味ブログ。
+趣味ブログのテンプレート。
 
 ## 技術選定
 
@@ -13,6 +13,7 @@ TODO
 ## Deploy
 
 Vercelにデプロイ。  
+https://blog-nextjs-git-dev-tommylife88.vercel.app/
 
 ## ToDo
 

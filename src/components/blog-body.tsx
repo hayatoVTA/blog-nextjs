@@ -31,7 +31,10 @@ const BlogBody: React.VFC<Props> = ({ content }) => {
     <Container className={classes.root}>
       <Grid container>
         <Grid item className={classes.blogBody}>
-          <div dangerouslySetInnerHTML={{ __html: content }} />
+          <div
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
         </Grid>
       </Grid>
     </Container>

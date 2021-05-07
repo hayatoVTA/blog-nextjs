@@ -1,3 +1,40 @@
 {
-  "presets": ["next/babel"]
+  "presets": ["next/babel"],
+  "plugins": [
+    [
+      "prismjs",
+      {
+        "languages": [
+          "c",
+          "cpp",
+          "csharp",
+          "javascript",
+          "css",
+          "markup",
+          "bash",
+          "diff",
+          "docker",
+          "ignore",
+          "json",
+          "markdown",
+          "php",
+          "python",
+          "jsx",
+          "tsx",
+          "regex",
+          "ruby",
+          "sql",
+          "swift",
+          "typescript",
+          "vim",
+          "yaml"
+        ],
+        "plugins": [
+          "show-language"
+        ],
+        "theme": "okaidia",
+        "css": true
+      }
+    ]
+  ]
 }
