@@ -1,19 +1,17 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import useTheme from '@material-ui/core/styles/useTheme';
 
 import DateFormatter from '@/components/date-formatter';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     maxWidth: '900px',
-  },
-  tagList: {
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
   },
 }));
 
@@ -33,6 +31,7 @@ const BlogHeader: React.VFC<Props> = ({
   coverImage,
 }) => {
   const classes = useStyles();
+  const theme = useTheme();
   return (
     <Container className={classes.root}>
       <Grid container direction="column" spacing={3}>
@@ -58,15 +57,17 @@ const BlogHeader: React.VFC<Props> = ({
           <></>
         )}
         {tags.length > 0 ? (
-          <Grid container spacing={1} className={classes.tagList}>
-            {tags.map((tag: string) => (
-              <Grid item key={tag}>
-                <Button size="small" variant="outlined" color="secondary">
-                  {tag}
-                </Button>
-              </Grid>
-            ))}
-          </Grid>
+          <Box px={theme.spacing(0.2)}>
+            <Grid container spacing={1}>
+              {tags.map((tag: string) => (
+                <Grid item key={tag}>
+                  <Button size="small" variant="outlined" color="secondary">
+                    {tag}
+                  </Button>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
         ) : (
           <></>
         )}

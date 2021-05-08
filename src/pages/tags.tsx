@@ -1,16 +1,14 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { Button, Box, Container, Grid, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import useTheme from '@material-ui/core/styles/useTheme';
+
 import { getTags } from '@/lib/posts';
 import Link from '@/components/link';
 import Layout from '@/components/layout/layout';
-
-const useStyles = makeStyles((theme) => ({
-  tagList: {
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-  },
-}));
 
 // getStaticProps() の返り値をもとにPostに渡される型を推測する。
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
@@ -26,7 +24,7 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const Tags = ({ allTags }: Props): JSX.Element => {
-  const classes = useStyles();
+  const theme = useTheme();
   return (
     <Layout title="Tags" description="Tag list">
       <Container maxWidth="lg">
@@ -39,17 +37,19 @@ const Tags = ({ allTags }: Props): JSX.Element => {
           </Typography>
         </Box>
         {allTags.length > 0 ? (
-          <Grid container spacing={1} className={classes.tagList}>
-            {allTags.map((tag: string) => (
-              <Grid item key={tag}>
-                <Link href="/tags/[tag]" as={`/tags/${tag}`} underline="none">
-                  <Button size="small" variant="outlined" color="secondary">
-                    {tag}
-                  </Button>
-                </Link>
-              </Grid>
-            ))}
-          </Grid>
+          <Box px={theme.spacing(0.2)}>
+            <Grid container spacing={1}>
+              {allTags.map((tag: string) => (
+                <Grid item key={tag}>
+                  <Link href="/tags/[tag]" as={`/tags/${tag}`} underline="none">
+                    <Button size="small" variant="outlined" color="secondary">
+                      {tag}
+                    </Button>
+                  </Link>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
         ) : (
           <></>
         )}

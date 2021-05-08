@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -122,6 +123,14 @@ const Header: React.VFC = () => {
         ) : (
           <></>
         )}
+        {/**
+        <Image
+          src="/images/nextjs-logotype-dark.png"
+          alt="Picture of header"
+          layout="fill"
+          objectFit="cover"
+        />
+         */}
         <img
           src="/images/nextjs-logotype-dark.png"
           alt="Picture of header"

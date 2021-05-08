@@ -1,7 +1,7 @@
 ---
 title: 'Learn How to Pre-render Pages Using Static Generation with Next.js'
 excerpt: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus.'
-tags: [test, React.js, Next.js, aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccccccccccccccccccccccc, dddddd, eeeeeee]
+tags: [test, React.js, Next.js]
 date: '2021-01-03T10:00:00+09:00'
 ---
 
