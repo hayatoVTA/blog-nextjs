@@ -93,6 +93,7 @@ const Header: React.VFC = () => {
       </SwipeableDrawer>
       <Box>
         <IconButton
+          aria-label="open-drawer"
           onClick={() => setOpenDrawer(!openDrawer)}
           disableRipple
           color="secondary"
@@ -123,13 +124,12 @@ const Header: React.VFC = () => {
         )}
         <img
           src="/images/nextjs-logotype-dark.png"
-          alt="Picture of the author"
+          alt="Picture of header"
           width="100%"
           height="100%" /** ここは画像サイズから自動取得したい */
           className={classes.headerImg}
         />
         <Box
-          component="p"
           position="absolute"
           width="100%"
           top="50%"
@@ -137,10 +137,10 @@ const Header: React.VFC = () => {
           textAlign="center"
           className={classes.headerTxt}
         >
-          <Typography variant="h1" component="span">
+          <Typography variant="h1" component="span" color="primary">
             {config.siteMeta.title}
           </Typography>
-          <Typography variant="h5" component="p">
+          <Typography variant="h5" component="p" color="primary">
             {config.siteMeta.description}
           </Typography>
         </Box>

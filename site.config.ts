@@ -4,7 +4,7 @@ export const config = {
     description: 'いろいろ試すだけのブログ（Next.js × Vercel）',
   },
   baseUrl:
-    process.env.NODE_ENV === 'production'
+    process.env.NODE_ENV === ('production' || 'development')
       ? process.env.NEXT_PUBLIC_BASEURL
       : 'http://localhost:3000',
   social: {

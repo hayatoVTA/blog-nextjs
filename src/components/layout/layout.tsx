@@ -70,7 +70,7 @@ const Layout: React.VFC<Props> = ({ children, title, description, url }) => {
       </Head>
       <ScrollTopToAnchor />
       <Header />
-      <Box position="sticky" top="0">
+      <Box position="sticky" top="0" zIndex="100">
         <NavigationBar />
       </Box>
       <Box my={theme.spacing(1)}>

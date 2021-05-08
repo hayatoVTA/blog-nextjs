@@ -17,7 +17,7 @@ type ShareProps = {
 };
 
 const Share: React.FC<ShareProps> = (props) => {
-  const twitterLink = `https://twitter.com/intent/tweet?text=${props.title}&url=${config.baseUrl}/${props.slug}/&hashtags=microcms`;
+  const twitterLink = `https://twitter.com/intent/tweet?text=${props.title}&url=${config.baseUrl}/${props.slug}/&hashtags=ブログ`;
   const facebookLink = `https://www.facebook.com/sharer.php?u=${config.baseUrl}/${props.slug}/`;
   const hatenaLink = `https://b.hatena.ne.jp/entry/${config.baseUrl}/${props.slug}/`;
   return (
