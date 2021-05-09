@@ -7,9 +7,9 @@ import Typography from '@material-ui/core/Typography';
 
 import { PostType } from '@/types/post';
 import { getSortedPostsData } from '@/lib/posts';
-import Layout from '@/components/layout/layout';
-import Post from '@/components/post';
-import SectionSeparator from '@/components/separator';
+import Layout from '@/components/layout/Layout';
+import Post from '@/components/Post';
+import SectionSeparator from '@/components/Separator';
 
 // getStaticProps() の返り値をもとにPostに渡される型を推測する。
 type Props = InferGetStaticPropsType<typeof getStaticProps>;

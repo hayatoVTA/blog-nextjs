@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import useTheme from '@material-ui/core/styles/useTheme';
 
-import DateFormatter from '@/components/date-formatter';
+import DateFormatter from '@/components/DateFormatter';
 
 const useStyles = makeStyles(() => ({
   root: {

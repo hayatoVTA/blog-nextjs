@@ -9,11 +9,11 @@ import { Box, Container, Grid, Typography } from '@material-ui/core';
 
 import { getAllPostBySlug, getPostData, getSortedPostsData } from '@/lib/posts';
 import { PostType } from '@/types/post';
-import Layout from '@/components/layout/layout';
-import BlogBody from '@/components/blog-body';
-import BlogHeader from '@/components/blog-header';
-import MorePost from '@/components/more-posts';
-import Share from '@/components/share';
+import Layout from '@/components/layout/Layout';
+import BlogBody from '@/components/BlogBody';
+import BlogHeader from '@/components/BlogHeader';
+import MorePost from '@/components/MorePosts';
+import Share from '@/components/Share';
 
 // ビルド時に実行される。事前ビルドするパスを配列で返却する。
 export const getStaticPaths: GetStaticPaths = async () => {

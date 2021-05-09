@@ -7,10 +7,10 @@ import {
 import { Box, Container, Typography } from '@material-ui/core';
 import { getAssociatedPosts, getTags } from '@/lib/posts';
 import { PostType } from '@/types/post';
-import Layout from '@/components/layout/layout';
-import Link from '@/components/link';
-import DateFormatter from '@/components/date-formatter';
-import SectionSeparator from '@/components/separator';
+import Layout from '@/components/layout/Layout';
+import Link from '@/components/Link';
+import DateFormatter from '@/components/DateFormatter';
+import SectionSeparator from '@/components/Separator';
 
 // 最初に実行される。事前ビルドするパスを配列で返却する。
 export const getStaticPaths: GetStaticPaths = async () => {

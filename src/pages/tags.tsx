@@ -7,8 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import useTheme from '@material-ui/core/styles/useTheme';
 
 import { getTags } from '@/lib/posts';
-import Link from '@/components/link';
-import Layout from '@/components/layout/layout';
+import Link from '@/components/Link';
+import Layout from '@/components/layout/Layout';
 
 // getStaticProps() の返り値をもとにPostに渡される型を推測する。
 type Props = InferGetStaticPropsType<typeof getStaticProps>;

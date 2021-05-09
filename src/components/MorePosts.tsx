@@ -8,7 +8,12 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@/components/Link';
 import DateFormatter from '@/components/DateFormatter';
 
-const useStyles = makeStyles(() => ({
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const useStyles = makeStyles((theme) => ({
+  media: {
+    height: 0,
+    paddingTop: '45.25%',
+  },
   root: {
     transition: 'all 0.3s',
     '&:hover': {
@@ -17,13 +22,8 @@ const useStyles = makeStyles(() => ({
       transform: 'translateY(-3px)',
     },
   },
-  date: {},
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
   content: {
-    height: 225,
+    height: 250,
   },
 }));
 
@@ -35,7 +35,7 @@ type Props = {
   coverImage?: string;
 };
 
-const Post: React.VFC<Props> = ({
+const MorePost: React.VFC<Props> = ({
   title,
   subtitle,
   slug,
@@ -58,14 +58,14 @@ const Post: React.VFC<Props> = ({
           )}
           <CardContent className={classes.content}>
             <Typography gutterBottom variant="h5" component="h2">
-              {title.length > 60 ? subtitle.substr(0, 60) + '...' : title}
+              {title.length > 80 ? subtitle.substr(0, 80) + '...' : title}
             </Typography>
             <Typography>
               <DateFormatter dateString={date} />
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {subtitle.length > 125
-                ? subtitle.substr(0, 125) + '...'
+              {subtitle.length > 150
+                ? subtitle.substr(0, 150) + '...'
                 : subtitle}
             </Typography>
           </CardContent>
@@ -75,4 +75,4 @@ const Post: React.VFC<Props> = ({
   );
 };
 
-export default Post;
+export default MorePost;

@@ -1,6 +1,6 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { Box, Container, Typography } from '@material-ui/core';
-import Layout from '@/components/layout/layout';
+import Layout from '@/components/layout/Layout';
 
 const About: React.VFC = () => {
   return (
