@@ -3,6 +3,7 @@ import {
   GetStaticProps,
   GetStaticPropsContext,
   InferGetStaticPropsType,
+  NextPage,
 } from 'next';
 import { Box, Container, Typography } from '@material-ui/core';
 import { getAssociatedPosts, getTags } from '@/lib/posts';
@@ -16,7 +17,7 @@ import SectionSeparator from '@/components/Separator';
 export const getStaticPaths: GetStaticPaths = async () => {
   // 全ての投稿のtagを取得する。
   const paths = getTags().map((tag: string) => {
-    return `/tags/${tag}`;
+    return `/tags/tag/${tag}`;
   });
   return {
     paths,
@@ -41,19 +42,19 @@ export const getStaticProps: GetStaticProps = async (
   };
 };
 
-const TagPosts = ({ tag, posts }: Props): JSX.Element => {
+const TagPosts: NextPage<Props> = (props) => {
   return (
     <Layout title="Tags" description="Tag list">
       <Container maxWidth="lg">
         <Box py={2} textAlign="center">
           <Typography variant="h2" component="span">
-            Tag : {tag}
+            Tag : {props.tag}
           </Typography>
           <Typography variant="h5" component="p">
-            All tags : {tag}.
+            All tags : {props.tag}.
           </Typography>
         </Box>
-        {posts?.map(({ slug, title, excerpt, date }: PostType) => (
+        {props.posts?.map(({ slug, title, excerpt, date }: PostType) => (
           <div key={slug}>
             <Link href={`/posts/${encodeURIComponent(slug)}`}>
               <Typography variant="h5" component="p">

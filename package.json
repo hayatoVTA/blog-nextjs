@@ -12,6 +12,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "date-fns": "^2.19.0",
     "gray-matter": "^4.0.2",
     "next": "10.0.8",

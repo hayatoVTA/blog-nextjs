@@ -44,6 +44,11 @@ const Footer: React.VFC = () => {
                         <ListItemText primary="tags" />
                       </ListItem>
                     </Link>
+                    <Link href={'/blogs/'} color="inherit" underline="always">
+                      <ListItem>
+                        <ListItemText primary="blogs" />
+                      </ListItem>
+                    </Link>
                   </List>
                 </Box>
               </Box>

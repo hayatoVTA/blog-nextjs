@@ -1,7 +1,7 @@
 ---
 title: 'Source Code'
 excerpt: 'Source code style test on markdown.'
-tags: []
+tags: [JavaScript, TypeScript]
 date: '2021-01-04T10:00:26+09:00'
 ---
 
