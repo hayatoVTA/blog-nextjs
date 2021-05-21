@@ -44,11 +44,19 @@ const Blog = ({ allPostsData }: Props): JSX.Element => {
           alignItems="center"
           justify="flex-start"
         >
-          {allPostsData.map(({ slug, title, excerpt, date }: PostType) => (
-            <Grid item key={slug} xs={12} sm={6} md={4}>
-              <Post title={title} subtitle={excerpt} slug={slug} date={date} />
-            </Grid>
-          ))}
+          {allPostsData.map(
+            ({ slug, title, excerpt, date, image }: PostType) => (
+              <Grid item key={slug} xs={12} sm={6} md={4}>
+                <Post
+                  title={title}
+                  subtitle={excerpt}
+                  slug={slug}
+                  date={date}
+                  coverImage={image}
+                />
+              </Grid>
+            )
+          )}
         </Grid>
       </Container>
     </Layout>

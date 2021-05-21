@@ -65,10 +65,11 @@ const Post: NextPage<Props> = (props) => {
                 excerpt={props.postData.excerpt}
                 date={props.postData.date}
                 tags={props.postData.tags}
-                //coverImage={post?.fields.coverImage.fields.file.url}
+                coverImage={props.postData.image}
               />
               <BlogBody content={props.postData.contentHtml} />
             </Box>
+            {/** サイドメニューを固定するならここか。
             <Box>
               <Box position="sticky" top="10vh" marginTop="15vh">
                 <ul>
@@ -82,6 +83,7 @@ const Post: NextPage<Props> = (props) => {
                 </ul>
               </Box>
             </Box>
+            */}
           </Box>
           <Box mb={4}>
             <Typography

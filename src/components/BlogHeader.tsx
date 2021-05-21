@@ -35,6 +35,15 @@ const BlogHeader: React.VFC<Props> = ({
   return (
     <Container className={classes.root}>
       <Grid container direction="column" spacing={3}>
+        {coverImage ? (
+          <Grid item>
+            <Box maxWidth="200px" margin="0 auto">
+              <img src={coverImage} style={{ height: 'auto', width: '100%' }} />
+            </Box>
+          </Grid>
+        ) : (
+          <></>
+        )}
         <Grid item>
           <Typography variant="h4" component="h1">
             {title}
@@ -49,13 +58,6 @@ const BlogHeader: React.VFC<Props> = ({
             </Grid>
           </Grid>
         </Grid>
-        {coverImage ? (
-          <Grid item>
-            <img src={coverImage} style={{ height: 'auto', width: '100%' }} />
-          </Grid>
-        ) : (
-          <></>
-        )}
         {tags.length > 0 ? (
           <Box px={theme.spacing(0.2)}>
             <Grid container spacing={1}>

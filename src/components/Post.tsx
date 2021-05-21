@@ -22,9 +22,7 @@ const useStyles = makeStyles(() => ({
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
-  content: {
-    height: 225,
-  },
+  content: {},
 }));
 
 type Props = {
@@ -44,8 +42,8 @@ const Post: React.VFC<Props> = ({
 }) => {
   const classes = useStyles();
   return (
-    <Card className={classes.root}>
-      <Link href="/posts/[slug]" as={`/posts/${slug}`} underline="none">
+    <Link href="/posts/[slug]" as={`/posts/${slug}`} underline="none">
+      <Card className={classes.root}>
         <CardActionArea>
           {coverImage ? (
             <CardMedia
@@ -58,7 +56,7 @@ const Post: React.VFC<Props> = ({
           )}
           <CardContent className={classes.content}>
             <Typography gutterBottom variant="h5" component="h2">
-              {title.length > 60 ? subtitle.substr(0, 60) + '...' : title}
+              {title.length > 60 ? title.substr(0, 60) + '...' : title}
             </Typography>
             <Typography>
               <DateFormatter dateString={date} />
@@ -70,8 +68,8 @@ const Post: React.VFC<Props> = ({
             </Typography>
           </CardContent>
         </CardActionArea>
-      </Link>
-    </Card>
+      </Card>
+    </Link>
   );
 };
 
