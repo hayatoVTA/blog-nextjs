@@ -16,8 +16,8 @@ const postsDirectory = path.join(process.cwd(), 'posts');
 
 export const getTags = (): any => {
   const allPosts = getSortedPostsData();
-  let tags: any[] = [];
-  allPosts.forEach((data: { tags: any }) => {
+  let tags: string[] = [];
+  allPosts.forEach((data: { tags: string }) => {
     tags = [...tags, ...data.tags];
   });
   // Set オブジェクトは、プリミティブ値やオブジェクト参照を問わず、あらゆる型で一意の値を格納できます。
@@ -25,12 +25,12 @@ export const getTags = (): any => {
   return setTags.sort();
 };
 
-export const getAssociatedPosts = async (tag: string): Promise<any> => {
+export const getAllPostByTag = (tag: string): any => {
   const allPosts = getSortedPostsData();
-  const associatedPosts = allPosts.filter((data: { tags: string | string[] }) =>
+  const ret = allPosts.filter((data: { tags: string[] }) =>
     data.tags.includes(tag)
   );
-  return associatedPosts;
+  return ret;
 };
 
 export const getSortedPostsData = (): any => {
@@ -63,16 +63,8 @@ export const getSortedPostsData = (): any => {
   });
 };
 
-export const getAllPostBySlug = (): any => {
-  const fileNames = fs.readdirSync(postsDirectory);
-  return fileNames.map((fileName) => {
-    // GetStaticPaths のオブジェクトの形式
-    return {
-      params: {
-        slug: fileName.replace(/\.md$/, ''),
-      },
-    };
-  });
+export const getAllMdFile = (): string[] => {
+  return fs.readdirSync(postsDirectory);
 };
 
 export const getPostData = async (slug: string): Promise<any> => {

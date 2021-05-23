@@ -28,13 +28,13 @@ const Share: React.FC<ShareProps> = (props) => {
       justifyContent="center"
       alignItems="center"
     >
-      <TwitterShareButton url={twitterLink} title={props.title}>
+      <TwitterShareButton url={encodeURI(twitterLink)} title={props.title}>
         <TwitterIcon size={32} round={true} />
       </TwitterShareButton>
-      <FacebookShareButton url={facebookLink}>
+      <FacebookShareButton url={encodeURI(facebookLink)}>
         <FacebookIcon size={32} round={true} />
       </FacebookShareButton>
-      <HatenaShareButton url={hatenaLink} title={props.title}>
+      <HatenaShareButton url={encodeURI(hatenaLink)} title={props.title}>
         <HatenaIcon size={32} round={true} />
       </HatenaShareButton>
     </Box>

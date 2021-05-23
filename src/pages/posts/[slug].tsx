@@ -7,50 +7,16 @@ import {
 } from 'next';
 import { Box, Container, Grid, Typography } from '@material-ui/core';
 
-import { getAllPostBySlug, getPostData, getSortedPostsData } from '@/lib/posts';
+import { getAllMdFile, getPostData, getSortedPostsData } from '@/lib/posts';
 import { PostType } from '@/types/post';
 import Layout from '@/components/layout/Layout';
 import BlogBody from '@/components/BlogBody';
 import BlogHeader from '@/components/BlogHeader';
-import MorePost from '@/components/MorePosts';
+import CardPostList from '@/components/CardPostList';
 import Share from '@/components/Share';
-
-// ビルド時に実行される。事前ビルドするパスを配列で返却する。
-export const getStaticPaths: GetStaticPaths = async () => {
-  // 全ての投稿のslugを取得する。
-  const paths = getAllPostBySlug();
-  // paths と fallback key を含むオブジェクトを返却する。
-  return {
-    paths,
-    fallback: false, // 存在しないパスは全て404エラーで返す。
-  };
-};
 
 // getStaticProps() の返り値をもとにPostに渡される型を推測する。
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
-
-// この関数はサーバー側でのビルド時に呼び出され、
-// ルーティングの情報が入ったparamsを受け取る
-export const getStaticProps: GetStaticProps = async (
-  context: GetStaticPropsContext
-) => {
-  const mySlug = context.params?.slug as string;
-  const postData = await getPostData(mySlug);
-  const allPostsData = await getSortedPostsData();
-  const allPostsDataExceptOwn = allPostsData.filter(({ slug }: PostType) => {
-    return slug !== mySlug;
-  });
-  allPostsDataExceptOwn.length = 3;
-
-  // ビルド時に Post コンポーネントは props を受け取る。
-  return {
-    props: {
-      postData,
-      allPostsDataExceptOwn,
-    },
-    revalidate: 1,
-  };
-};
 
 // props はビルド時に getStaticProps() によって生成される。
 const Post: NextPage<Props> = (props) => {
@@ -123,9 +89,9 @@ const Post: NextPage<Props> = (props) => {
               {props.allPostsDataExceptOwn.map(
                 ({ slug, title, excerpt, date }: PostType) => (
                   <Grid item key={slug} xs={12} sm={6} md={4}>
-                    <MorePost
+                    <CardPostList
                       title={title}
-                      subtitle={excerpt}
+                      excerpt={excerpt}
                       slug={slug}
                       date={date}
                     />
@@ -138,6 +104,47 @@ const Post: NextPage<Props> = (props) => {
       </article>
     </Layout>
   );
+};
+
+// ビルド時に実行される。事前ビルドするパスを配列で返却する。
+export const getStaticPaths: GetStaticPaths = async () => {
+  // 全ての投稿のslugを取得する。
+  const files = getAllMdFile();
+  const paths = files.map((fileName: string) => {
+    return {
+      params: {
+        slug: fileName.replace(/\.md$/, ''),
+      },
+    };
+  });
+  // paths と fallback key を含むオブジェクトを返却する。
+  return {
+    paths,
+    fallback: false, // 存在しないパスは全て404エラーで返す。
+  };
+};
+
+// この関数はサーバー側でのビルド時に呼び出され、
+// ルーティングの情報が入ったparamsを受け取る
+export const getStaticProps: GetStaticProps = async (
+  context: GetStaticPropsContext
+) => {
+  const mySlug = context.params?.slug as string;
+  const postData = await getPostData(mySlug);
+  const allPostsData = await getSortedPostsData();
+  const allPostsDataExceptOwn = allPostsData.filter(({ slug }: PostType) => {
+    return slug !== mySlug;
+  });
+  allPostsDataExceptOwn.length = 3;
+
+  // ビルド時に Post コンポーネントは props を受け取る。
+  return {
+    props: {
+      postData,
+      allPostsDataExceptOwn,
+    },
+    revalidate: 1,
+  };
 };
 
 export default Post;

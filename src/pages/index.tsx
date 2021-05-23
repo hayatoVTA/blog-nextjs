@@ -8,21 +8,12 @@ import Typography from '@material-ui/core/Typography';
 import { PostType } from '@/types/post';
 import { getSortedPostsData } from '@/lib/posts';
 import Layout from '@/components/layout/Layout';
-import Post from '@/components/Post';
+import CardPostList from '@/components/CardPostList';
 
 // getStaticProps() の返り値をもとにPostに渡される型を推測する。
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
-export const getStaticProps: GetStaticProps = async () => {
-  const allPostsData = getSortedPostsData();
-  return {
-    props: {
-      allPostsData,
-    },
-  };
-};
-
-const Blog = ({ allPostsData }: Props): JSX.Element => {
+const LandingPage = ({ allPostsData }: Props): JSX.Element => {
   return (
     <Layout title="Blog" description="Blog with React/Next.js">
       <Container maxWidth="lg">
@@ -47,9 +38,9 @@ const Blog = ({ allPostsData }: Props): JSX.Element => {
           {allPostsData.map(
             ({ slug, title, excerpt, date, image }: PostType) => (
               <Grid item key={slug} xs={12} sm={6} md={4}>
-                <Post
+                <CardPostList
                   title={title}
-                  subtitle={excerpt}
+                  excerpt={excerpt}
                   slug={slug}
                   date={date}
                   coverImage={image}
@@ -63,4 +54,13 @@ const Blog = ({ allPostsData }: Props): JSX.Element => {
   );
 };
 
-export default Blog;
+export const getStaticProps: GetStaticProps = async () => {
+  const allPostsData = getSortedPostsData();
+  return {
+    props: {
+      allPostsData,
+    },
+  };
+};
+
+export default LandingPage;

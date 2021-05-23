@@ -13,37 +13,38 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
 
-import DateFormatter from '@/components/DateFormatter';
+import { getAllPostByTag, getTags } from '@/lib/posts';
+import { PostType } from '@/types/post';
 import Layout from '@/components/layout/Layout';
 import Link from '@/components/Link';
+import DateFormatter from '@/components/DateFormatter';
 import SectionSeparator from '@/components/Separator';
-import { PostType } from '@/types/post';
-import { getSortedPostsData } from '@/lib/posts';
 
 const PER_PAGE = 2 as const; //動作確認のため少なくしているが本来10とか。
 
 // getStaticProps() の返り値をもとにPostに渡される型を推測する。
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
-const DynamicPage: NextPage<Props> = (props) => {
+const DynamicTagPage: NextPage<Props> = (props) => {
   const router = useRouter();
+  const tag = router.query.tag;
   const offset = router.query.offset
     ? Number.parseInt(String(router.query.offset), 10)
     : 1;
 
   const handleChangePage = useCallback(
     (_: React.ChangeEvent<unknown>, page: number) => {
-      void router.push(`/blogs/page/${page}`);
+      void router.push(`/tags/${tag}/page/${page}`);
     },
     [router]
   );
 
   return (
-    <Layout title="Page" description="Page">
+    <Layout title="Tags" description="Tag list">
       <Container maxWidth="lg">
         <Box py={2} textAlign="center">
           <Typography variant="h2" component="span">
-            Page : {router.query.offset}
+            Tag : {router.query.tag}
           </Typography>
         </Box>
         {props.posts?.map(({ slug, title, excerpt, date }: PostType) => (
@@ -83,31 +84,37 @@ const DynamicPage: NextPage<Props> = (props) => {
 
 // 最初に実行される。事前ビルドするパスを配列で返却する。
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allPosts = getSortedPostsData();
-  const range = (start: number, end: number) =>
-    [...Array(end - start + 1)].map((_, i) => start + i);
-  const paths = range(1, Math.ceil(allPosts.length / PER_PAGE)).map(
-    (offset) => `/blogs/page/${offset}`
-  );
+  const tagList = getTags();
+  const temp: string[] = [];
+  tagList.forEach((tag: string) => {
+    const allPostByTag = getAllPostByTag(tag);
+    const range = (start: number, end: number) =>
+      [...Array(end - start + 1)].map((_, i) => start + i);
+    range(1, Math.ceil(allPostByTag.length / PER_PAGE)).forEach((offset) => {
+      temp.push(`/tags/${tag}/page/${offset}`);
+    });
+  });
   return {
-    paths,
+    paths: temp,
     fallback: false, // 存在しないパスは全て404エラーで返す。
   };
 };
 
+// ルーティングの情報が入ったparamsを受け取る
 export const getStaticProps: GetStaticProps = async (
   context: GetStaticPropsContext
 ) => {
+  const tag = context.params?.tag as string;
   let offset = context.params?.offset
     ? Number.parseInt(String(context.params?.offset), 10)
     : 1;
   offset = offset - 1; // 1始まり
-  const allPostsData = getSortedPostsData();
-  const max = allPostsData.length;
+  const allPostByTag = getAllPostByTag(tag);
+  const max = allPostByTag.length;
   const start = offset * PER_PAGE;
   let end = (offset + 1) * PER_PAGE;
   end = end > max ? max : end;
-  const posts = allPostsData.slice(start, end);
+  const posts = allPostByTag.slice(start, end);
   return {
     props: {
       posts,
@@ -116,4 +123,4 @@ export const getStaticProps: GetStaticProps = async (
   };
 };
 
-export default DynamicPage;
+export default DynamicTagPage;

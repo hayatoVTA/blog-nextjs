@@ -39,16 +39,20 @@ const Footer: React.VFC = () => {
                 </Typography>
                 <Box margin="0" padding="0">
                   <List dense={true} disablePadding={true}>
-                    <Link href={'/tags/'} color="inherit" underline="always">
-                      <ListItem>
+                    <ListItem>
+                      <Link href={'/tags/'} color="inherit" underline="always">
                         <ListItemText primary="tags" />
-                      </ListItem>
-                    </Link>
-                    <Link href={'/blogs/'} color="inherit" underline="always">
-                      <ListItem>
+                      </Link>
+                    </ListItem>
+                    <ListItem>
+                      <Link
+                        href={'/blogs/page/1'} // ある前提
+                        color="inherit"
+                        underline="always"
+                      >
                         <ListItemText primary="blogs" />
-                      </ListItem>
-                    </Link>
+                      </Link>
+                    </ListItem>
                   </List>
                 </Box>
               </Box>

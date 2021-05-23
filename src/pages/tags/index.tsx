@@ -13,17 +13,7 @@ import Layout from '@/components/layout/Layout';
 // getStaticProps() の返り値をもとにPostに渡される型を推測する。
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
-// ルーティングの情報が入ったparamsを受け取る
-export const getStaticProps: GetStaticProps = async () => {
-  const allTags = getTags();
-  return {
-    props: {
-      allTags,
-    },
-  };
-};
-
-const Tags = ({ allTags }: Props): JSX.Element => {
+const AllTags = ({ allTags }: Props): JSX.Element => {
   const theme = useTheme();
   return (
     <Layout title="Tags" description="Tag list">
@@ -42,8 +32,8 @@ const Tags = ({ allTags }: Props): JSX.Element => {
               {allTags.map((tag: string) => (
                 <Grid item key={tag}>
                   <Link
-                    href="/tags/tag/[tag]"
-                    as={`/tags/tag/${tag}`}
+                    href="/tags/[tag]/page/1"
+                    as={`/tags/${tag}/page/1`}
                     underline="none"
                   >
                     <Button size="small" variant="outlined" color="secondary">
@@ -75,4 +65,14 @@ const Tags = ({ allTags }: Props): JSX.Element => {
   );
 };
 
-export default Tags;
+// ルーティングの情報が入ったparamsを受け取る
+export const getStaticProps: GetStaticProps = async () => {
+  const allTags = getTags();
+  return {
+    props: {
+      allTags,
+    },
+  };
+};
+
+export default AllTags;

@@ -8,12 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@/components/Link';
 import DateFormatter from '@/components/DateFormatter';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const useStyles = makeStyles((theme) => ({
-  media: {
-    height: 0,
-    paddingTop: '45.25%',
-  },
+const useStyles = makeStyles(() => ({
   root: {
     transition: 'all 0.3s',
     '&:hover': {
@@ -22,30 +17,33 @@ const useStyles = makeStyles((theme) => ({
       transform: 'translateY(-3px)',
     },
   },
-  content: {
-    height: 250,
+  date: {},
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
   },
+  content: {},
 }));
 
 type Props = {
   title: string;
-  subtitle: string;
+  excerpt: string;
   slug: string;
   date: string;
   coverImage?: string;
 };
 
-const MorePost: React.VFC<Props> = ({
+const CardPostList: React.VFC<Props> = ({
   title,
-  subtitle,
+  excerpt,
   slug,
   date,
   coverImage,
 }) => {
   const classes = useStyles();
   return (
-    <Card className={classes.root}>
-      <Link href="/posts/[slug]" as={`/posts/${slug}`} underline="none">
+    <Link href="/posts/[slug]" as={`/posts/${slug}`} underline="none">
+      <Card className={classes.root}>
         <CardActionArea>
           {coverImage ? (
             <CardMedia
@@ -58,21 +56,34 @@ const MorePost: React.VFC<Props> = ({
           )}
           <CardContent className={classes.content}>
             <Typography gutterBottom variant="h5" component="h2">
-              {title.length > 80 ? subtitle.substr(0, 80) + '...' : title}
+              {title.length > 60 ? title.substr(0, 60) + '...' : title}
             </Typography>
             <Typography>
               <DateFormatter dateString={date} />
             </Typography>
+            {/**CardActionAreaがButtonベースなのでだめ
+            {tags.length > 0 ? (
+              <Grid container spacing={1}>
+                {tags.map((tag: string) => (
+                  <Grid item key={tag}>
+                    <Button size="small" variant="outlined" color="secondary">
+                      {tag}
+                    </Button>
+                  </Grid>
+                ))}
+              </Grid>
+            ) : (
+              <></>
+            )}
+             */}
             <Typography variant="body2" color="textSecondary" component="p">
-              {subtitle.length > 150
-                ? subtitle.substr(0, 150) + '...'
-                : subtitle}
+              {excerpt.length > 125 ? excerpt.substr(0, 125) + '...' : excerpt}
             </Typography>
           </CardContent>
         </CardActionArea>
-      </Link>
-    </Card>
+      </Card>
+    </Link>
   );
 };
 
-export default MorePost;
+export default CardPostList;
